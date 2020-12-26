@@ -28,6 +28,28 @@ describe('convertFromBaseNToDecimal()', () => {
       expect(converter.convertFromBaseNToDecimal('1234.12', 8)).toBeCloseTo(668.15625);
     });
   });
+
+  describe('When given an invalid number in base N', () => {
+    test('should throw an error indicating that the number is not a string', () => {
+      expect(() => converter.convertFromBaseNToDecimal((1010 as unknown) as string, 2)).toThrowError(
+        'Number to convert must be a string',
+      );
+    });
+    test('should throw an error indicating that there is more than one delimiter', () => {
+      expect(() => converter.convertFromBaseNToDecimal('1101.10.11', 2)).toThrowError(
+        'Number contains more than one delimiter',
+      );
+    });
+    test('should throw an error indicating that the number is invalid', () => {
+      expect(() => converter.convertFromBaseNToDecimal('123', 3)).toThrowError('Invalid number');
+      expect(() => converter.convertFromBaseNToDecimal('12@', 3)).toThrowError('Invalid number');
+    });
+    test('should throw an error indicating that the baseFrom must be a number', () => {
+      expect(() => converter.convertFromBaseNToDecimal('123', ('5' as unknown) as number)).toThrowError(
+        'Base from needs to be a number',
+      );
+    });
+  });
 });
 
 describe('convertFromDecimalToBaseN()', () => {
