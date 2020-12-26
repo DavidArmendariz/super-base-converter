@@ -1,4 +1,4 @@
-export const lettersToNUmbersMap: { [key: string]: number } = {
+export const lettersToNumbersMap: { [key: string]: number } = {
   A: 10,
   B: 11,
   C: 12,

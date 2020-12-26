@@ -22,3 +22,16 @@ describe('convertFromBaseNToDecimal()', () => {
     });
   });
 });
+
+describe('convertFromDecimalToBaseN()', () => {
+  describe('When given a decimal number', () => {
+    test('should convert it to a base N number', () => {
+      expect(converter.convertFromDecimalToBaseN(13, 2)).toEqual('1101');
+      expect(converter.convertFromDecimalToBaseN(27, 2)).toEqual('11011');
+      expect(converter.convertFromDecimalToBaseN(48, 3)).toEqual('1210');
+      expect(converter.convertFromDecimalToBaseN(232, 11)).toEqual('1A1');
+      expect(converter.convertFromDecimalToBaseN(351, 14)).toEqual('1B1');
+      expect(converter.convertFromDecimalToBaseN(2748, 16)).toEqual('ABC');
+    });
+  });
+});
