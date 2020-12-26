@@ -21,6 +21,13 @@ describe('convertFromBaseNToDecimal()', () => {
       expect(converter.convertFromBaseNToDecimal('ABC', 16)).toEqual(2748);
     });
   });
+
+  describe('When given a number in base N with an integer and decimal part', () => {
+    test('should convert it to a decimal number', () => {
+      expect(converter.convertFromBaseNToDecimal('1101.10', 2)).toBeCloseTo(13.5);
+      expect(converter.convertFromBaseNToDecimal('1234.12', 8)).toBeCloseTo(668.15625);
+    });
+  });
 });
 
 describe('convertFromDecimalToBaseN()', () => {
