@@ -63,4 +63,9 @@ describe('convertFromDecimalToBaseN()', () => {
       expect(converter.convertFromDecimalToBaseN(2748, 16)).toEqual('ABC');
     });
   });
+  describe('When given a decimal number that is less than the base we want to convert', () => {
+    test('should convert it to a base N number and delete the zeroes from the left', () => {
+      expect(converter.convertFromDecimalToBaseN(10, 16)).toEqual('A');
+    });
+  });
 });

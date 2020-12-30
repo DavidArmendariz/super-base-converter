@@ -66,6 +66,9 @@ export class BaseConverter {
     remainders.forEach((remainder) => {
       result += remainder;
     });
+    while (result[0] === '0' && result.length !== 1) {
+      result = result.slice(1);
+    }
     return result;
   }
 }
