@@ -46,23 +46,19 @@ export class BaseConverter {
     }
     return result;
   }
-  convertFromDecimalToBaseN(numberToConvert: number, baseTo: number): string {
-    let numberToConvertCopy = numberToConvert;
+  private convertIntegerPart(integerPart: number, baseTo: number) {
     const remainders = [];
     while (true) {
-      const quotient = Math.floor(numberToConvertCopy / baseTo);
-      const remainder = numberToConvertCopy % baseTo;
+      const quotient = Math.floor(integerPart / baseTo);
+      const remainder = integerPart % baseTo;
       remainders.push(remainder >= 10 ? this.numbersToLettersMap[remainder] : remainder.toString());
-      numberToConvertCopy = quotient;
-      if (numberToConvertCopy < baseTo) {
+      integerPart = quotient;
+      if (integerPart < baseTo) {
         break;
       }
     }
     remainders.reverse();
-    let result =
-      numberToConvertCopy >= 10
-        ? (this.numbersToLettersMap[numberToConvertCopy] as string)
-        : numberToConvertCopy.toString();
+    let result = integerPart >= 10 ? (this.numbersToLettersMap[integerPart] as string) : integerPart.toString();
     remainders.forEach((remainder) => {
       result += remainder;
     });
@@ -70,5 +66,27 @@ export class BaseConverter {
       result = result.slice(1);
     }
     return result;
+  }
+  private convertDecimalPart(decimalPart: number, baseTo: number, precision: number) {
+    let result = '';
+    let decimalPartCopy = decimalPart;
+    for (let i = 0; i < precision; i++) {
+      decimalPartCopy *= baseTo;
+      const integerPart = Math.floor(decimalPartCopy);
+      result += decimalPartCopy >= 10 ? this.numbersToLettersMap[integerPart] : integerPart.toString();
+      decimalPartCopy %= 1;
+    }
+    return result;
+  }
+  convertFromDecimalToBaseN(numberToConvert: number, baseTo: number, precision = 2): string {
+    const numberToConvertCopy = numberToConvert;
+    const decimalPart = numberToConvertCopy % 1;
+    const integerPart = Math.floor(numberToConvertCopy);
+    const convertedIntegerPart = this.convertIntegerPart(integerPart, baseTo);
+    if (decimalPart) {
+      const convertedDecimalPart = this.convertDecimalPart(decimalPart, baseTo, precision);
+      return `${convertedIntegerPart}.${convertedDecimalPart}`;
+    }
+    return convertedIntegerPart;
   }
 }

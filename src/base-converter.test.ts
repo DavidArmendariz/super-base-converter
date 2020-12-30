@@ -68,4 +68,12 @@ describe('convertFromDecimalToBaseN()', () => {
       expect(converter.convertFromDecimalToBaseN(10, 16)).toEqual('A');
     });
   });
+
+  describe('When given a decimal number with a decimal part', () => {
+    test('should convert both the integer and the decimal part with a given precision', () => {
+      expect(converter.convertFromDecimalToBaseN(10.8, 2)).toEqual('1010.11');
+      expect(converter.convertFromDecimalToBaseN(10.8, 8)).toEqual('12.63');
+      expect(converter.convertFromDecimalToBaseN(10.8, 16)).toEqual('A.CC');
+    });
+  });
 });
