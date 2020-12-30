@@ -1,5 +1,7 @@
 import { lettersToNumbersMap } from './constants/letters-to-numbers-map';
+import { ConvertOptions } from './interfaces/convert-options';
 import { inverseObject } from './utils/inverse-object';
+import { isInteger } from './utils/is-integer';
 
 export class BaseConverter {
   private numbersToLettersMap;
@@ -11,8 +13,8 @@ export class BaseConverter {
     if (typeof numberToConvert !== 'string') {
       throw new Error('Number to convert must be a string');
     }
-    if (typeof baseFrom !== 'number') {
-      throw new Error('Base from needs to be a number');
+    if (!isInteger(baseFrom)) {
+      throw new Error('Base needs to be an integer');
     }
     const splittedNumberByDelimiter = numberToConvert.split(this.delimiter);
     if (splittedNumberByDelimiter.length < 1 || splittedNumberByDelimiter.length > 2) {
@@ -78,7 +80,19 @@ export class BaseConverter {
     }
     return result;
   }
+  private validateDecimalNumber(numberToConvert: number, baseTo: number, precision: number) {
+    if (!isInteger(baseTo)) {
+      throw new Error('Base needs to be an integer');
+    }
+    if (!isInteger(precision)) {
+      throw new Error('Precision needs to be an integer');
+    }
+    if (typeof numberToConvert !== 'number') {
+      throw new Error('Number to convert needs to be a number');
+    }
+  }
   convertFromDecimalToBaseN(numberToConvert: number, baseTo: number, precision = 2): string {
+    this.validateDecimalNumber(numberToConvert, baseTo, precision);
     const numberToConvertCopy = numberToConvert;
     const decimalPart = numberToConvertCopy % 1;
     const integerPart = Math.floor(numberToConvertCopy);
@@ -88,5 +102,9 @@ export class BaseConverter {
       return `${convertedIntegerPart}.${convertedDecimalPart}`;
     }
     return convertedIntegerPart;
+  }
+  convert(numberToConvert: string, { fromBase, toBase, precision = 2 }: ConvertOptions): string {
+    const decimalNumber = this.convertFromBaseNToDecimal(numberToConvert, fromBase);
+    return this.convertFromDecimalToBaseN(decimalNumber, toBase, precision);
   }
 }

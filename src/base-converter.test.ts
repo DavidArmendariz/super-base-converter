@@ -46,7 +46,7 @@ describe('convertFromBaseNToDecimal()', () => {
     });
     test('should throw an error indicating that the baseFrom must be a number', () => {
       expect(() => converter.convertFromBaseNToDecimal('123', ('5' as unknown) as number)).toThrowError(
-        'Base from needs to be a number',
+        'Base needs to be an integer',
       );
     });
   });
@@ -74,6 +74,37 @@ describe('convertFromDecimalToBaseN()', () => {
       expect(converter.convertFromDecimalToBaseN(10.8, 2)).toEqual('1010.11');
       expect(converter.convertFromDecimalToBaseN(10.8, 8)).toEqual('12.63');
       expect(converter.convertFromDecimalToBaseN(10.8, 16)).toEqual('A.CC');
+    });
+  });
+
+  describe('When given invalid parameters to the method', () => {
+    test('should throw an error indicating that the base needs to be an integer', () => {
+      expect(() => converter.convertFromDecimalToBaseN(10, 45.56)).toThrowError('Base needs to be an integer');
+    });
+    test('should throw an error indicating that the precision needs to be an integer', () => {
+      expect(() => converter.convertFromDecimalToBaseN(10, 12, 12.56)).toThrowError('Precision needs to be an integer');
+    });
+    test('should throw an error indicating that the number to convert needs to be a number', () => {
+      expect(() => converter.convertFromDecimalToBaseN(('test' as unknown) as number, 12, 2)).toThrowError(
+        'Number to convert needs to be a number',
+      );
+    });
+  });
+});
+
+describe('convert()', () => {
+  describe('When given a number in base N and a number in base M', () => {
+    test('should convert the number between these bases', () => {
+      expect(converter.convert('10', { fromBase: 10, toBase: 10 })).toEqual('10');
+      expect(converter.convert('10', { fromBase: 10, toBase: 2 })).toEqual('1010');
+      expect(converter.convert('10', { fromBase: 2, toBase: 10 })).toEqual('2');
+      expect(converter.convert('10', { fromBase: 2, toBase: 5 })).toEqual('2');
+      expect(converter.convert('10', { fromBase: 5, toBase: 2 })).toEqual('101');
+      expect(converter.convert('10.5', { fromBase: 10, toBase: 10 })).toEqual('10.50');
+      expect(converter.convert('10.5', { fromBase: 10, toBase: 2 })).toEqual('1010.10');
+      expect(converter.convert('10.11', { fromBase: 2, toBase: 10 })).toEqual('2.75');
+      expect(converter.convert('10.11', { fromBase: 2, toBase: 5 })).toEqual('2.33');
+      expect(converter.convert('10.11', { fromBase: 5, toBase: 2 })).toEqual('101.00');
     });
   });
 });
