@@ -103,6 +103,12 @@ export class BaseConverter {
     }
     return convertedIntegerPart;
   }
+  /**
+   * This function allows you to convert a number in base `N` to a number in base `M`
+   * @param numberToConvert The number in base `N` we want to convert
+   * @param __namedParameters An object with the options for the convert method to work
+   * @returns The number in base `N` converted to base `M`
+   */
   convert(numberToConvert: string, { fromBase, toBase, precision = 2 }: ConvertOptions): string {
     const decimalNumber = this.convertFromBaseNToDecimal(numberToConvert, fromBase);
     return this.convertFromDecimalToBaseN(decimalNumber, toBase, precision);
