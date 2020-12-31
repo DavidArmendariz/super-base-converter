@@ -7,13 +7,13 @@ Base converter is a NPM Package useful for converting numbers from one base to a
 If you are using yarn:
 
 ```bash
-yarn add base-converter
+yarn add super-base-converter
 ```
 
 If you are using npm:
 
 ```bash
-npm install base-converter
+npm install super-base-converter
 ```
 
 ## Usage
@@ -21,7 +21,7 @@ npm install base-converter
 ### Initialize
 
 ```javascript
-import { BaseConverter } from 'base-converter';
+import { BaseConverter } from 'super-base-converter';
 
 const baseConverter = new BaseConverter();
 ```

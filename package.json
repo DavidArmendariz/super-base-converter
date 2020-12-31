@@ -1,5 +1,5 @@
 {
-  "name": "base-converter",
+  "name": "super-base-converter",
   "version": "1.0.0",
   "description": "A package to convert numbers from one base to another",
   "main": "build/index.js",
@@ -9,12 +9,12 @@
   "private": false,
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/DavidArmendariz/base-converter.git"
+    "url": "git+https://github.com/DavidArmendariz/super-base-converter.git"
   },
   "bugs": {
-    "url": "https://github.com/DavidArmendariz/base-converter/issues"
+    "url": "https://github.com/DavidArmendariz/super-base-converter/issues"
   },
-  "homepage": "https://github.com/DavidArmendariz/base-converter#readme",
+  "homepage": "https://github.com/DavidArmendariz/super-base-converter#readme",
   "scripts": {
     "check-types": "tsc --noEmit",
     "clean": "rimraf build",
