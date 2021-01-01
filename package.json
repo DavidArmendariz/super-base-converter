@@ -1,6 +1,6 @@
 {
   "name": "super-base-converter",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A package to convert numbers from one base to another",
   "main": "build/index.js",
   "types": "build/index.d.ts",
